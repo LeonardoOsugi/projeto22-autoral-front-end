@@ -43,6 +43,7 @@ const CaixaProdutos = styled.div`
 `;
 
 const Product = styled.div`
+     flex-wrap: wrap;
      flex-direction: column;
      background-color: #ffffff;
      margin:5%;

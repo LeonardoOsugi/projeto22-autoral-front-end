@@ -1,15 +1,20 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function NavBar(){
     return(
         <CaixaNavBar>
-            <Buttons>
-                Sing-up
-            </Buttons>
+            <Link to='/sign-up'>
+                <Buttons>
+                    Sing-up
+                </Buttons>
+            </Link>
             <p>Projeto Autoral E-comerce</p>
-            <Buttons>
-                Sing-in
-            </Buttons>
+            <Link to='/sign-in'>
+                <Buttons>
+                    Sing-in
+                </Buttons>
+            </Link>
         </CaixaNavBar>
     )
 }
@@ -35,4 +40,5 @@ const Buttons = styled.div`
         width: 150px;
         height: 25px;
         border-radius: 10px;
+        font-size: 20px;
 `;
