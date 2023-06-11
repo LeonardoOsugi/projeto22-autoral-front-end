@@ -22,7 +22,7 @@ export default function HomePage(){
                     <img src={p.img} alt="imagem-do-produto"/>
                     <Infos>
                         <p>{p.name}</p>
-                        <p>R$ {p.price}</p>
+                        <p>R$ {(p.price / 100).toLocaleString("pt-BR", { style: "decimal", minimumFractionDigits: 2 })}</p>
                         <p>Slot: {p.slot}</p>
                     </Infos>
                 </Product>

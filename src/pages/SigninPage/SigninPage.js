@@ -1,19 +1,43 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../../constants/UserContext";
+import axios from "axios";
 
 export default function SigninPage(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {setUserLogged} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    function login(e){
+        e.preventDefault();
+        const body = { email, password };
+        console.log(body);
+        const promisse = axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/sign-in`, body)
+        console.log(promisse);
+        promisse.then((res) => {
+            alert("Login realizado com sucesso! :)");
+            setUserLogged(res.data);
+            navigate("/");
+        }).catch((e) => alert(e.response.data.message));
+    }
     return(
         <CaixaSignin>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt-MNOUQCNWHQtH49rEsmzkpa8zfjImuhz0Q&usqp=CAU" alt=""/>
-            <Form onSubmit=''>
+            <Form onSubmit={login}>
                 <input
                 type="email"
                 placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 />
                 <input
                 type="password"
                 placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 />
 

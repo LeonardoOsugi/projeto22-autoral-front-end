@@ -1,38 +1,90 @@
 import styled from "styled-components";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
+import axios from "axios";
 
 export default function SignupPage(){
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [category, setCategory] = useState("CLIENT");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const signUp = async (e) => {
+        e.preventDefault()
+
+    const dadosCadastro = {name, email, password, confirmPassword, category}
+    setLoading(true)
+
+    try{    
+
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/sign-up`, dadosCadastro)
+    console.log(process.env.REACT_APP_API_BASE_URL)
+    
+    } catch (err){
+        if (err.response?.status === 422){
+            alert("Senha e confirmação de senha devem ser iguais!")
+        } else if (err.response?.status === 409){
+            alert("Usuário ou email já cadastrados!")
+        } else {
+            alert("Não foi possível fazer o cadastro, favor tentar novamente mais tarde!")
+        }        
+        setLoading(false)
+        return;
+    }    
+    
+    setLoading(false)
+    navigate("/sign-in")
+    
+    }
     return(
         <CaixaSignup>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt-MNOUQCNWHQtH49rEsmzkpa8zfjImuhz0Q&usqp=CAU" alt=""/>
-            <Form onSubmit="">
+            <Form onSubmit={signUp}>
                 <input
                 type="nome"
                 placeholder="Nome"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 />
                 <input
                 type="email"
                 placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 />
                 <input
                 type="password"
                 placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 />
                 <input
                 type="password"
                 placeholder="confirme sua senha"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 />
                 <Registro isLoading={loading}>
+                {loading ? (
+                    <ThreeDots 
+                        height="40"
+                        width="40"
+                        color="#ffffff"
+                    />
+                ):(
                     <button type="submit">
                         <strong>Cadastrar</strong>
                     </button>
+                )}
                 </Registro>
             </Form>
 
