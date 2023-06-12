@@ -2,6 +2,7 @@ import styled from "styled-components";
 import NavBar from "../../components/NavBar/NavBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function HomePage(){
     const [produtos, setProdutos] = useState(undefined);
@@ -18,14 +19,16 @@ export default function HomePage(){
             <NavBar/>
             <CaixaProdutos>
                 {produtos?.map((p) => 
-                <Product key={p.id}>
-                    <img src={p.img} alt="imagem-do-produto"/>
-                    <Infos>
-                        <p>{p.name}</p>
-                        <p>R$ {(p.price / 100).toLocaleString("pt-BR", { style: "decimal", minimumFractionDigits: 2 })}</p>
-                        <p>Slot: {p.slot}</p>
-                    </Infos>
-                </Product>
+                <Link to={`/product/${p.id}`}>
+                    <Product key={p.id}>
+                        <img src={p.img} alt="imagem-do-produto"/>
+                        <Infos>
+                            <p>{p.name}</p>
+                            <p>R$ {(p.price / 100).toLocaleString("pt-BR", { style: "decimal", minimumFractionDigits: 2 })}</p>
+                            <p>Slot: {p.slot}</p>
+                        </Infos>
+                    </Product>
+                </Link>
                 )}
             </CaixaProdutos>
         </>
@@ -43,14 +46,18 @@ const CaixaProdutos = styled.div`
 `;
 
 const Product = styled.div`
+     display: flex;
      flex-wrap: wrap;
      flex-direction: column;
+     align-items: center;
+     justify-content: center;
      background-color: #ffffff;
-     margin:5%;
+     margin-top: 10%;
+     margin-bottom: 10%;
      padding: 20px;
      border-radius: 10px;
      img{
-        width: 200px;
+        width: 190px;
      }
 `;
 
