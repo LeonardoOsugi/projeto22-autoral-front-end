@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import UserContext from "../../constants/UserContext";
+import UserContext from "../../context/UserContext";
 import axios from "axios";
 
 export default function SigninPage(){
@@ -19,6 +19,7 @@ export default function SigninPage(){
         promisse.then((res) => {
             alert("Login realizado com sucesso! :)");
             setUserLogged(res.data);
+            console.log(res.data);
             navigate("/");
         }).catch((e) => alert(e.response.data.message));
     }
