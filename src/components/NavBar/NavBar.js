@@ -6,13 +6,13 @@ export default function NavBar(){
     return(
         <>
             <CaixaNavBar>
-                <Link to='/sign-up'>
+                <Link className="not-sublime" to='/sign-up'>
                     <Buttons>
                         Sing-up
                     </Buttons>
                 </Link>
                 <p>Projeto Autoral E-comerce</p>
-                <Link to='/sign-in'>
+                <Link className="not-sublime" to='/sign-in'>
                     <Buttons>
                         Sing-in
                     </Buttons>
@@ -40,6 +40,9 @@ const CaixaNavBar = styled.div`
         color: white;
         p{
             font-size: 40px;
+        }
+        .not-sublime{
+            text-decoration: none;
         }
 `;
 
